@@ -13,7 +13,9 @@
       background: #212121;
       display: grid;
       place-content: center;
-      height: 100dvh;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
     }
 
     main {
@@ -38,97 +40,111 @@
       flex-direction: column;
       margin: 4px 0;
       padding: 4px 8px;
+    }
 
-      span {
-        width: 36px;
-        height: 36px;
-        background: #eee;
-        font-size: 12px;
-        font-weight: 500;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 999999px;
-      }
+    .message span {
+      width: 36px;
+      height: 36px;
+      background: #eee;
+      font-size: 12px;
+      font-weight: 500;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+    }
 
-      p {
-        border-radius: 4px;
-        padding: 4px 8px;
-        margin-top: 4px;
-      }
+    .message p {
+      border-radius: 4px;
+      padding: 4px 8px;
+      margin-top: 4px;
+    }
 
-      &.user {
-        align-self: flex-end;
-        align-items: flex-end;
+    .message.user {
+      align-self: flex-end;
+      align-items: flex-end;
+    }
 
-        span,
-        p {
-          background: rgb(219, 236, 255);
-        }
-      }
+    .message.user span,
+    .message.user p {
+      background: rgb(219, 236, 255);
+    }
 
-      &.bot {
-        align-self: flex-start;
+    .message.bot {
+      align-self: flex-start;
+    }
 
-        span,
-        p {
-          background: rgb(198, 255, 220);
-        }
-      }
+    .message.bot span,
+    .message.bot p {
+      background: rgb(198, 255, 220);
     }
 
     form {
       display: flex;
+      align-items: center;
+      padding: 8px;
+      background-color: #212121;
+      border-radius: 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    }
 
-      input {
-        border-radius: 50px;
-        flex-grow: 1;
-        border: none;
-        padding: 12px;
-        outline: none;
-        font-size: 16px;
-        margin-left: 8px;
-        background-color: white;
-      }
-
-      button {
-         background: transparent;
-          border: none;
-          color: #09f;
-          border-radius: 50%;
-          cursor: pointer;
-          width: 40px;
-          height: 40px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 16px;
-          transition: background .3s ease;
-
-        &[disabled] {
-          background: #ccc;
-          opacity: .6;
-          pointer-events: none;
-        }
-
-        &:hover {
-          background: rgb(0, 104, 173);
-        }
-      }
-      .icon-button {
-      background: transparent;
+    input {
+      flex-grow: 1;
       border: none;
-      color: #09f;
-      font-size: 24px;
+      padding: 14px;
+      outline: none;
+      font-size: 16px;
+      background-color: transparent;
+      border-radius: 15px;
+      margin-right: 8px;
+      color: white;
+    }
+
+    input::placeholder {
+      color: #bbb;
+    }
+
+    .enter-button {
+      background: white;
+      border: none;
+      color: #212121;
+      border-radius: 15px;
       cursor: pointer;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-right: 8px;
+      font-size: 16px;
+      transition: background 0.3s ease;
     }
-    .icon-button[disabled] {
-      color: #ccc;
+
+    .enter-button[disabled] {
+      background: #676767;
+      color: #212121;
+      opacity: 0.6;
+      pointer-events: none;
     }
+
+    .enter-button:hover {
+      background: rgb(0, 104, 173);
+      color: white;
+    }
+
+    .voice-button {
+      background: #676767;
+      opacity: 0.6;
+      border: none;
+      color: #09f;
+      border-radius: 50%;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: background 0.3s ease;
     }
 
     small {
@@ -153,7 +169,7 @@
     const $template = $('#message-template')
     const $messages = $('ul')
     const $container = $('main')
-    const $button = $('button')
+    const $button = $('.enter-button')
     const $info = $('small')
     const $loading = $('.loading')
 
@@ -230,7 +246,7 @@
       const $text = $newMessage.querySelector('p')
 
       $text.textContent = text
-      $who.textContent = sender === 'bot' ? 'GPT' : 'Yo'
+      $who.textContent = sender === 'bot' ? 'Aidos' : 'Yo'
       $newMessage.classList.add(sender)
 
       $messages.appendChild($newMessage)
@@ -248,8 +264,11 @@
   </main>
 
   <form>
-    <input placeholder="Escribe tu mensaje aquí...">
-    <button disabled><i class="fas fa-paper-plane"></i></button>
+    <button class="voice-button">
+      <img src="voice.svg" alt="Mic Icon" width="36" height="36">
+    </button>    
+    <input placeholder="Message Aidos">
+    <button class="enter-button" disabled><i class="fa-solid fa-arrow-up"></i></button>
   </form>
 
   <small>&nbsp;</small>
